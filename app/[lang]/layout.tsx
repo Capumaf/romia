@@ -2,6 +2,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getDictionary } from "@/lib/getDictionary";
 import type { Locale } from "@/i18n";
+import CustomCursor from "@/components/CustomCursor";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export function generateStaticParams() {
   return [{ lang: "en" }, { lang: "es" }];
@@ -20,6 +22,8 @@ export default async function LangLayout({
 
   return (
     <>
+      <ScrollProgress />
+      <CustomCursor />
       <Navbar locale={locale} dict={dict} />
       {children}
       <Footer dict={dict} />

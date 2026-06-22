@@ -28,7 +28,13 @@ html {
   width: 100%;
   max-width: 1280px;
   margin-inline: auto;
-  padding-inline: 1.5rem;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 768px) {
+  .container-romia {
+    padding-inline: 1.5rem;
+  }
 }
 
 @layer base {
@@ -36,4 +42,16 @@ html {
     background-color: var(--bg);
     color: var(--ink);
   }
+}
+
+h1, h2, h3 {
+  font-family: var(--font-orbitron);
+}
+
+body {
+  font-family: var(--font-orbitron);
+}
+
+* {
+  cursor: none;
 }

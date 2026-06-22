@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import type { Locale } from "@/i18n";
 import type { getDictionary } from "@/lib/getDictionary";
 
@@ -14,7 +15,15 @@ type NavbarProps = {
 
 export default function Navbar({ locale, dict }: NavbarProps) {
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
   const oppositeLocale = locale === "en" ? "es" : "en";
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const prev = scrollY.getPrevious() ?? 0;
+    if (latest > prev && latest > 80) setHidden(true);
+    else setHidden(false);
+  });
 
   const links = [
     { href: "#framework", label: dict.nav.framework },
@@ -25,7 +34,11 @@ export default function Navbar({ locale, dict }: NavbarProps) {
   ];
 
   return (
-    <header className="fixed top-0 left-0 z-50 w-full">
+    <motion.header
+      className="fixed top-0 left-0 z-50 w-full"
+      animate={{ y: hidden ? "-120%" : "0%" }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+    >
       <div className="container-romia">
         <nav
           className="mt-4 rounded-2xl border backdrop-blur-md md:mt-6"
@@ -43,7 +56,11 @@ export default function Navbar({ locale, dict }: NavbarProps) {
                 className="h-3 w-3 rounded-full"
                 style={{ background: "var(--pink)", boxShadow: "0 0 20px var(--pink)" }}
               />
-              <Link href={`/${locale}`} className="font-mono text-sm uppercase tracking-[0.25em]">
+              <Link
+                href={`/${locale}`}
+                className="font-mono text-sm uppercase tracking-[0.25em]"
+                style={{ fontFamily: "var(--font-orbitron)" }}
+              >
                 ROMIA
               </Link>
             </div>
@@ -143,6 +160,6 @@ export default function Navbar({ locale, dict }: NavbarProps) {
           )}
         </nav>
       </div>
-    </header>
+    </motion.header>
   );
 }

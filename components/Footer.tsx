@@ -17,7 +17,7 @@ export default function Footer({ dict }: { dict: Dict }) {
               <div
                 className="h-3 w-3 rounded-full"
                 style={{ background: "var(--pink)", boxShadow: "0 0 20px var(--pink)" }}
-              />
+                />
               <span className="font-mono uppercase tracking-[0.25em]">ROMIA</span>
             </div>
             <p className="mt-6 max-w-md text-sm leading-relaxed" style={{ color: "var(--ink-dim)" }}>
