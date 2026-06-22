@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import type { getDictionary } from "@/lib/getDictionary";
@@ -11,6 +12,25 @@ type Dict = Awaited<ReturnType<typeof getDictionary>>;
 const ease: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
 export default function CTA({ locale, dict }: { locale: Locale; dict: Dict }) {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email) return;
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) setStatus("success");
+      else setStatus("error");
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact" className="relative py-32">
       <div className="container-romia">
@@ -33,24 +53,63 @@ export default function CTA({ locale, dict }: { locale: Locale; dict: Dict }) {
               <p className="mt-8 max-w-2xl text-lg leading-relaxed md:text-xl" style={{ color: "var(--ink-dim)" }}>
                 {dict.cta.description}
               </p>
-              <div className="mt-12 flex flex-wrap gap-4">
-                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                  <Link
-                    href={`mailto:${dict.footer.email}`}
-                    className="block rounded-2xl px-8 py-4 font-medium"
-                    style={{ background: "var(--pink)", color: "#fff" }}
-                  >
-                    {dict.cta.primaryCta}
-                  </Link>
-                </motion.div>
-                <Link
-                  href={`/${locale}#framework`}
-                  className="rounded-2xl border px-8 py-4 font-medium opacity-70 transition-opacity hover:opacity-100"
-                  style={{ borderColor: "var(--pink-line)" }}
-                >
-                  {dict.cta.secondaryCta}
-                </Link>
-              </div>
+
+              {status === "success" ? (
+                <div className="mt-12 rounded-2xl border p-8" style={{ borderColor: "var(--pink-line)", background: "var(--bg-elev)" }}>
+                  <p className="font-mono text-sm uppercase tracking-widest" style={{ color: "var(--pink)" }}>
+                    ✓ Message sent — we'll be in touch soon.
+                  </p>
+                </div>
+              ) : (
+                <div className="mt-12 space-y-4 max-w-xl">
+                  <input
+                    type="text"
+                    placeholder="Your name"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="w-full rounded-xl border bg-transparent px-5 py-3 text-sm outline-none transition-colors focus:border-pink-500"
+                    style={{ borderColor: "var(--pink-line)", color: "var(--ink)" }}
+                  />
+                  <input
+                    type="email"
+                    placeholder="Your email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    className="w-full rounded-xl border bg-transparent px-5 py-3 text-sm outline-none transition-colors focus:border-pink-500"
+                    style={{ borderColor: "var(--pink-line)", color: "var(--ink)" }}
+                  />
+                  <textarea
+                    placeholder="Tell us about your project (optional)"
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    rows={4}
+                    className="w-full rounded-xl border bg-transparent px-5 py-3 text-sm outline-none transition-colors focus:border-pink-500 resize-none"
+                    style={{ borderColor: "var(--pink-line)", color: "var(--ink)" }}
+                  />
+                  <div className="flex flex-wrap gap-4 pt-2">
+                    <motion.button
+                      onClick={handleSubmit}
+                      disabled={status === "loading"}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      className="rounded-2xl px-8 py-4 font-medium"
+                      style={{ background: "var(--pink)", color: "#fff", opacity: status === "loading" ? 0.7 : 1 }}
+                    >
+                      {status === "loading" ? "Sending..." : dict.cta.primaryCta}
+                    </motion.button>
+                    <Link
+                      href={`/${locale}#framework`}
+                      className="rounded-2xl border px-8 py-4 font-medium opacity-70 transition-opacity hover:opacity-100"
+                      style={{ borderColor: "var(--pink-line)" }}
+                    >
+                      {dict.cta.secondaryCta}
+                    </Link>
+                  </div>
+                  {status === "error" && (
+                    <p className="text-sm" style={{ color: "var(--red)" }}>Something went wrong. Try again.</p>
+                  )}
+                </div>
+              )}
             </div>
           </FadeIn>
 
