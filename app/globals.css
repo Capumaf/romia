@@ -1,26 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #050507;
+  --bg-card: #0A0A0E;
+  --bg-elev: #0D0D11;
+
+  --ink: #FFFFFF;
+  --ink-dim: rgba(255,255,255,.66);
+  --ink-mute: rgba(255,255,255,.40);
+
+  --pink: #FF2D8E;
+  --pink-soft: rgba(255,45,142,.13);
+  --pink-line: rgba(255,45,142,.34);
+
+  --cyan: #2DD4BF;
+  --yellow: #FBBF24;
+  --red: #FB7185;
+  --green: #34D399;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+.container-romia {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
