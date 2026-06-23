@@ -64,7 +64,7 @@ export default function CTA({ locale, dict }: { locale: Locale; dict: Dict }) {
                 <div className="mt-12 space-y-4 max-w-xl">
                   <input
                     type="text"
-                    placeholder="Your name"
+                    placeholder={dict.cta.formName}
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     className="w-full rounded-xl border bg-transparent px-5 py-3 text-sm outline-none transition-colors focus:border-pink-500"
@@ -72,14 +72,14 @@ export default function CTA({ locale, dict }: { locale: Locale; dict: Dict }) {
                   />
                   <input
                     type="email"
-                    placeholder="Your email"
+                    placeholder={dict.cta.formEmail}
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     className="w-full rounded-xl border bg-transparent px-5 py-3 text-sm outline-none transition-colors focus:border-pink-500"
                     style={{ borderColor: "var(--pink-line)", color: "var(--ink)" }}
                   />
                   <textarea
-                    placeholder="Tell us about your project (optional)"
+                    placeholder={dict.cta.formMessage}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     rows={4}
@@ -95,7 +95,7 @@ export default function CTA({ locale, dict }: { locale: Locale; dict: Dict }) {
                       className="rounded-2xl px-8 py-4 font-medium"
                       style={{ background: "var(--pink)", color: "#fff", opacity: status === "loading" ? 0.7 : 1 }}
                     >
-                      {status === "loading" ? "Sending..." : dict.cta.primaryCta}
+                      {status === "loading"? dict.cta.formSending : dict.cta.primaryCta}
                     </motion.button>
                     <Link
                       href={`/${locale}#framework`}
@@ -106,7 +106,7 @@ export default function CTA({ locale, dict }: { locale: Locale; dict: Dict }) {
                     </Link>
                   </div>
                   {status === "error" && (
-                    <p className="text-sm" style={{ color: "var(--red)" }}>Something went wrong. Try again.</p>
+                    <p className="text-sm" style={{ color: "var(--red)" }}>{dict.cta.formError}</p>
                   )}
                 </div>
               )}
