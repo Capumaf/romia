@@ -4,9 +4,15 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 export default function CustomCursor() {
+  const [isMobile, setIsMobile] = useState(false);
+
   const [pos, setPos] = useState({ x: -100, y: -100 });
   const [dot, setDot] = useState({ x: -100, y: -100 });
   const [hovering, setHovering] = useState(false);
+
+  useEffect(() => {
+  setIsMobile(window.innerWidth < 1024);
+}, []);
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
@@ -26,6 +32,8 @@ export default function CustomCursor() {
       window.removeEventListener("mouseover", over);
     };
   }, []);
+
+  if (isMobile) return null;
 
   return (
     <>

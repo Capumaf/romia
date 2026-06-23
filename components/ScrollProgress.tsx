@@ -11,8 +11,7 @@ export default function ScrollProgress() {
       style={{
         scaleX: scrollYProgress,
         background: "var(--pink)",
-        boxShadow: "0 0 8px var(--pink)",
       }}
     />
   );
-}
+}   
