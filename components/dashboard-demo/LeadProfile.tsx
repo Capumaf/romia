@@ -16,6 +16,7 @@ export default function LeadProfile() {
       <p className="font-mono text-xs uppercase tracking-[0.2em]">
         Lead Profile
       </p>
+      
 
       <div className="mt-6 space-y-4 text-sm">
 

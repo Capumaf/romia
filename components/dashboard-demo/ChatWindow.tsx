@@ -43,7 +43,7 @@ export default function ChatWindow() {
 
         <div
         ref={chatRef}
-        className="h-[400px] overflow-y-auto scrollbar-hide flex flex-col gap-3"
+        className="h-[280px] overflow-y-auto scrollbar-hide flex flex-col gap-3 lg:h-[400px]"
         >
 
         <AnimatePresence>
