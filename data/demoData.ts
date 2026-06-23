@@ -1,4 +1,4 @@
-import { DemoEvent } from "./types";
+import { DemoEvent } from "../components/dashboard-demo/types";
 
 export const demoEvents: DemoEvent[] = [
   {

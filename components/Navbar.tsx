@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import type { Locale } from "@/i18n";
 import type { getDictionary } from "@/lib/getDictionary";
+
 
 type Dict = Awaited<ReturnType<typeof getDictionary>>;
 
@@ -16,14 +17,30 @@ type NavbarProps = {
 export default function Navbar({ locale, dict }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [detached, setDetached] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { scrollY } = useScroll();
   const oppositeLocale = locale === "en" ? "es" : "en";
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const prev = scrollY.getPrevious() ?? 0;
-    if (latest > prev && latest > 80) setHidden(true);
-    else setHidden(false);
-  });
+ useMotionValueEvent(scrollY, "change", (latest) => {
+  const prev = scrollY.getPrevious() ?? 0;
+
+  setDetached(latest > window.innerHeight * 0.8);
+
+  if (latest > prev && latest > 80) {
+    setHidden(true);
+  } else {
+    setHidden(false);
+  }
+
+  clearTimeout((window as any).__navbarTimeout);
+
+    (window as any).__navbarTimeout = setTimeout(() => {
+    if (scrollY.get() > window.innerHeight * 0.8) {
+    setHidden(true);
+    }
+    }, 2000);
+});
 
   const links = [
     { href: "#framework", label: dict.nav.framework },
@@ -41,7 +58,11 @@ export default function Navbar({ locale, dict }: NavbarProps) {
     >
       <div className="container-romia">
         <nav
-          className="mt-4 rounded-2xl border backdrop-blur-md md:mt-6"
+         className={`border backdrop-blur-md transition-all duration-300 ${
+          detached
+            ? "mt-4 rounded-2xl md:mt-6"
+            : "mt-0 rounded-none"
+             }`}
           style={{
             borderColor: "var(--pink-line)",
             background: "rgba(10,10,14,.85)",

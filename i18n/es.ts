@@ -14,7 +14,32 @@ export const es = {
     description: "Transforma conversaciones en oportunidades calificadas de venta.",
     primaryCta: "Solicitar Demo",
     secondaryCta: "Explorar Framework",
+  heroFlow: [
+  {
+    title: "NUEVO LEAD",
+    subtitle: "WhatsApp · Web · CRM",
   },
+  {
+    title: "MOTOR ROMIA",
+    subtitle: "Procesamiento y Ruta",
+  },
+  {
+    title: "INTENCIÓN",
+    subtitle: "Presupuesto · Tiempo · Necesidad",
+  },
+  {
+    title: "LEAD SCORE",
+    subtitle: "92% Compatibilidad",
+  },
+  {
+    title: "ASESOR",
+    subtitle: "Listo para seguimiento",
+  },
+],
+  },
+
+  
+
   problem: {
     eyebrow: "El Problema Comercial",
     title: "El Problema No Es Generar Leads.",

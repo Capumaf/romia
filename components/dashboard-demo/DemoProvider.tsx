@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 
-import { demoEvents } from "./demoData";
+import { demoEvents } from "../../data/demoData";
 import { LeadProfile, Message } from "./types";
 
 type DemoContextType = {

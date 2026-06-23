@@ -14,7 +14,33 @@ export const en = {
     description: "Transform conversations into qualified sales opportunities.",
     primaryCta: "Request Demo",
     secondaryCta: "Explore Framework",
+      heroFlow: [
+  {
+    title: "NEW LEAD",
+    subtitle: "WhatsApp · Website · CRM",
   },
+  {
+    title: "ROMIA ENGINE",
+    subtitle: "Lead Processing & Routing",
+  },
+  {
+    title: "INTENT ANALYSIS",
+    subtitle: "Budget · Timeline · Need",
+  },
+  {
+    title: "LEAD SCORE",
+    subtitle: "92% Match",
+  },
+  {
+    title: "ASSIGNED ADVISOR",
+    subtitle: "Ready for Follow-up",
+  },
+],
+  },
+
+
+
+
   problem: {
     eyebrow: "The Commercial Problem",
     title: "The Problem Isn't Generating Leads.",

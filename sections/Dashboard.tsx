@@ -3,7 +3,7 @@
 import type { getDictionary } from "@/lib/getDictionary";
 import type { Locale } from "@/i18n";
 import FadeIn from "@/components/FadeIn";
-import DashboardDemo from "@/components/dashboard-demo/DashboardDemo";
+import DashboardDemo from "@/components/dashboard-demo/DashboardDemoDesktop";
 
 type Dict = Awaited<ReturnType<typeof getDictionary>>;
 
