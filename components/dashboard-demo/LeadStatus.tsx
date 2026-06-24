@@ -9,13 +9,11 @@ export default function LeadStatus() {
   const status = leadProfile.leadStatus || t.leadStatusQualifying;
 
   const getColor = () => {
-    if (status.toLowerCase().includes("hot") || status.toLowerCase().includes("caliente"))
-      return "#f97316";
-    if (status.toLowerCase().includes("high") || status.toLowerCase().includes("alta"))
-      return "#22c55e";
-    return "#eab308";
-  };
-
+  const s = (status ?? "").toLowerCase();
+  if (s.includes("hot") || s.includes("caliente")) return "#f97316";
+  if (s.includes("high") || s.includes("alta")) return "#22c55e";
+  return "#eab308";
+};
   const getLabel = () => {
     if (status === t.leadStatusQualifying) return `🟡 ${t.leadStatusQualifying}`;
     if (status === t.leadStatusHighIntent) return `🟢 ${t.leadStatusHighIntent}`;
