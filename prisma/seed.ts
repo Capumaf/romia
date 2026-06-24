@@ -22,6 +22,17 @@ async function main() {
       role: "admin",
     },
   });
+const user = await prisma.user.upsert({
+  where: { email: "antonella@romia.io" },
+  update: {},
+  create: {
+    email: "antonella@romia.io",
+    password: "romia2026.",
+    name: "Antonella",
+    role: "admin",
+  },
+});
+
 
   console.log("✓ Usuario creado:", user.email);
 }
