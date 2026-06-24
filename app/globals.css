@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@import "tailwindcss";
+@source "../components";
+@source "../sections";
+@source "../app";
 
 :root {
   --bg: #050507;
