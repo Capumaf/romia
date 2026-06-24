@@ -67,7 +67,7 @@ function FlowGrid({ label, items }: { label: string; items: { number: string; la
       {/* ROW 2 — right to left (serpentine) */}
       {row2.length > 0 && (
         <div className="flex flex-row-reverse items-center">
-          {[...row2].reverse().map((item, i) => (
+          {row2.map((item, i) => (
             <div key={item.number} className="flex flex-1 flex-row-reverse items-center">
               <motion.div
                 className="flex-1 rounded-2xl border p-5"

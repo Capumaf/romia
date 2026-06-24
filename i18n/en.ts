@@ -173,8 +173,8 @@ export const en = {
     profileBedrooms: "Bedrooms",
     profileStatus: "Status",
     leadStatusLabel: "Lead Status",
-leadStatusQualifying: "Qualifying lead",
-leadStatusHighIntent: "High Intent",
+    leadStatusQualifying: "Qualifying lead",
+    leadStatusHighIntent: "High Intent",
 
   },
 

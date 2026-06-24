@@ -172,5 +172,8 @@ export const es = {
     profileBudget: "Presupuesto",
     profileBedrooms: "Dormitorios",
     profileStatus: "Estado",
+    leadStatusLabel: "Estado del Lead",
+    leadStatusQualifying: "Calificando lead",
+    leadStatusHighIntent: "Alta intención",
   },
 };
