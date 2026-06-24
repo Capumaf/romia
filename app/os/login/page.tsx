@@ -33,8 +33,8 @@ export default function LoginPage() {
 
   return (
     <div
-      className="os-root flex min-h-screen items-center justify-center px-4"
-      style={{ background: "var(--bg)" }}
+      className="os-root flex flex-1 items-center justify-center px-4"
+      style={{ background: "var(--bg)", minHeight: "100vh" }}
     >
       <div className="w-full max-w-sm">
         <div className="mb-10 text-center">
