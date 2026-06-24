@@ -24,8 +24,13 @@ export default function Industries({ dict }: { locale: Locale; dict: Dict }) {
               <br />
               {dict.industries.titleHighlight}
             </h2>
-            <p className="mt-8 max-w-3xl text-lg md:text-xl" style={{ color: "var(--ink-dim)" }}>
-              {dict.industries.description}
+            <p className="mt-8 max-w-3xl text-lg md:text-xl" style={{ color: "var(--ink-dim)", textAlign: "justify", }}>
+              {dict.industries.description.split("\n").map((line, index) => (
+              <span key={index}>
+              {line}
+              <br />
+              </span>
+              ))}
             </p>
           </div>
         </FadeIn>
@@ -61,7 +66,7 @@ export default function Industries({ dict }: { locale: Locale; dict: Dict }) {
             <h3 className="mt-6 text-3xl font-bold leading-tight md:text-5xl">
               {dict.industries.focusTitle}
             </h3>
-            <p className="mt-6 max-w-3xl text-lg" style={{ color: "var(--ink-dim)" }}>
+            <p className="mt-6 max-w-3xl text-lg" style={{ color: "var(--ink-dim)",  }}>
               {dict.industries.focusBody}
             </p>
           </div>

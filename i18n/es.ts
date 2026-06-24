@@ -38,16 +38,16 @@ export const es = {
 ],
   },
 
-  
+
 
   problem: {
     eyebrow: "El Problema Comercial",
-    title: "El Problema No Es Generar Leads.",
-    highlight: "Es Gestionarlos.",
+    title: "El Problema no es la prospección de clientes",
+    highlight: "Es la Gestión Comercial ",
     description: "La mayoría de los equipos pierden oportunidades porque las conversaciones, el seguimiento y el contexto del cliente están dispersos en múltiples canales.",
-    body: "La mayoría de las organizaciones no pierden oportunidades por falta de leads. Las pierden porque las conversaciones, el seguimiento, la información de proyectos y el contexto del cliente están fragmentados en múltiples sistemas, canales y equipos.",
+    body: "Las oportunidades se pierden cuando las conversaciones, el seguimiento y el contexto del cliente quedan dispersos entre equipos, canales y herramientas.",
     perspectiveLabel: "Perspectiva ROMIA",
-    statement: "El caos comercial no es un problema de generación de leads. Es un problema de sistemas.",
+    statement: "La generación de leads no es el problema.\nEl problema es como los gestionas ",
     items: [
       { title: "Conversaciones Fragmentadas", description: "Las interacciones con clientes están dispersas en WhatsApp, llamadas, formularios y hojas de cálculo." },
       { title: "Contexto Perdido", description: "La información crítica desaparece entre traspasos, equipos y ciclos de seguimiento." },
@@ -59,10 +59,10 @@ export const es = {
     eyebrow: "La Solución",
     title: "Inteligencia Comercial",
     titleHighlight: "Como Infraestructura.",
-    description: "ROMIA no es un chatbot. ROMIA es un framework de implementación de inteligencia comercial diseñado para estructurar conversaciones, decisiones, conocimiento y flujos operativos en un sistema unificado.",
+    description: "ROMIA convierte conversaciones, conocimiento y procesos comerciales en un sistema inteligente y conectado.",
     principleLabel: "Principio Central",
-    statement: "ROMIA no es un chatbot. ROMIA es infraestructura de inteligencia comercial.",
-    statementBody: "El objetivo no es automatizar conversaciones. El objetivo es diseñar sistemas que mejoren la toma de decisiones comerciales en toda la organización.",
+    statement: "ROMIA no es un chatbot.\nROMIA es infraestructura de inteligencia comercial.",
+    statementBody: "No se trata de automatizar mensajes. Se trata de construir sistemas que permitan tomar mejores decisiones comerciales.",
     pillars: [
       { title: "Capturar", description: "Centralizar interacciones de clientes desde múltiples canales comerciales en una sola capa de inteligencia." },
       { title: "Calificar", description: "Identificar intención, requisitos, prioridades y relevancia comercial a través de sistemas de calificación estructurados." },
@@ -75,7 +75,7 @@ export const es = {
     eyebrow: "ROMIA Framework™",
     title: "Una Metodología de",
     titleHighlight: "Implementación Estructurada.",
-    description: "ROMIA no se despliega con plantillas. Cada implementación sigue un framework estructurado diseñado para alinear procesos comerciales, inteligencia operativa y sistemas de decisión con IA.",
+    description: "ROMIA no se despliega con plantillas. \nCada implementación sigue un framework estructurado diseñado para alinear procesos comerciales, inteligencia operativa y sistemas de decisión con IA.",
     flowLabel: "Flujo de Implementación",
     phases: [
       { number: "01", title: "Descubrimiento", description: "Analizar procesos comerciales, fuentes de leads, criterios de calificación y objetivos de negocio." },
@@ -101,7 +101,7 @@ export const es = {
       { number: "05", title: "Comparación de Proyectos", description: "Apoya recomendaciones inteligentes evaluando múltiples oportunidades frente a los requisitos del cliente." },
       { number: "06", title: "Enrutamiento de Leads", description: "Asigna oportunidades según criterios de calificación, prioridades comerciales y reglas operativas." },
     ],
-    flow: ["Captación", "Memoria", "Inteligencia", "Stock", "Comparación", "Enrutamiento"],
+    flow: ["Captación", "Memoria", "Análisis", "Comparación", "Decisión", ,"Enrutamiento"],
   },
   howItWorks: {
     eyebrow: "Cómo Funciona",
@@ -134,7 +134,7 @@ export const es = {
     eyebrow: "Industrias",
     title: "Diseñado Para",
     titleHighlight: "Entornos Comerciales Complejos.",
-    description: "ROMIA es agnóstico por diseño. El framework se adapta a organizaciones donde la calificación, la toma de decisiones y la gestión de oportunidades son críticas.",
+    description: "ROMIA es agnóstico por diseño.\nEl framework se adapta a organizaciones donde la calificación, la toma de decisiones y la gestión de oportunidades son críticas.",
     focusLabel: "Enfoque Actual",
     focusTitle: "Real Estate Es Nuestra Primera Implementación.",
     focusBody: "ROMIA fue desarrollado inicialmente para organizaciones inmobiliarias, donde la calificación de leads, la inteligencia de proyectos y la coordinación comercial representan desafíos operativos críticos.",

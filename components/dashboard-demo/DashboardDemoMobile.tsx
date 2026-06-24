@@ -10,7 +10,7 @@ export default function DashboardDemoMobile() {
   return (
     <DemoProvider>
       <div
-        className="mt-10 overflow-hidden rounded-3xl border"
+        className="mt-10 rounded-3xl border"
         style={{
           borderColor: "var(--pink-line)",
           background: "var(--bg-card)",

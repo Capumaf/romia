@@ -3,7 +3,8 @@
 import type { getDictionary } from "@/lib/getDictionary";
 import type { Locale } from "@/i18n";
 import FadeIn from "@/components/FadeIn";
-import DashboardDemo from "@/components/dashboard-demo/DashboardDemoDesktop";
+import DashboardDemoDesktop from "@/components/dashboard-demo/DashboardDemoDesktop";
+import DashboardDemoMobile from "@/components/dashboard-demo/DashboardDemoMobile";
 
 type Dict = Awaited<ReturnType<typeof getDictionary>>;
 
@@ -24,13 +25,11 @@ export default function Dashboard({
             >
               {dict.dashboard.eyebrow}
             </p>
-
             <h2 className="text-3xl font-bold leading-tight md:text-4xl">
               {dict.dashboard.title}
               <br />
               {dict.dashboard.titleHighlight}
             </h2>
-
             <p
               className="mt-8 max-w-2xl text-lg"
               style={{ color: "var(--ink-dim)" }}
@@ -40,7 +39,12 @@ export default function Dashboard({
           </div>
         </FadeIn>
 
-        <DashboardDemo />
+        <div className="hidden md:block">
+          <DashboardDemoDesktop />
+        </div>
+        <div className="md:hidden">
+          <DashboardDemoMobile />
+        </div>
       </div>
     </section>
   );

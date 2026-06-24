@@ -61,7 +61,12 @@ export default function Solution({ dict }: { locale: Locale; dict: Dict }) {
               {dict.solution.principleLabel}
             </p>
             <h3 className="mt-6 text-3xl font-bold leading-tight md:text-5xl">
-              {dict.solution.statement}
+              {dict.solution.statement.split("\n").map((line, index) => (
+              <span key={index}>
+              {line}
+              <br />
+              </span>
+               ))}
             </h3>
             <p className="mt-6 max-w-3xl text-lg" style={{ color: "var(--ink-dim)" }}>
               {dict.solution.statementBody}

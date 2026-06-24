@@ -25,7 +25,7 @@ export default function Problem({ dict }: { locale: Locale; dict: Dict }) {
             <h3 className="mt-6 text-3xl font-semibold md:text-5xl" style={{ color: "var(--pink)" }}>
               {dict.problem.highlight}
             </h3>
-            <p className="mt-10 max-w-3xl text-lg leading-relaxed md:text-xl" style={{ color: "var(--ink-dim)" }}>
+            <p className="mt-10 max-w-4xl text-lg leading-relaxed md:text-xl" style={{ color: "var(--ink-dim)", textAlign: "justify",}}>
               {dict.problem.body}
             </p>
           </div>
@@ -45,19 +45,24 @@ export default function Problem({ dict }: { locale: Locale; dict: Dict }) {
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
             >
               <h3 className="text-xl font-semibold">{item.title}</h3>
-              <p className="mt-4 leading-relaxed" style={{ color: "var(--ink-dim)" }}>{item.description}</p>
+              <p className="mt-4 leading-relaxed" style={{ color: "var(--ink-dim)", textAlign: "justify", }}>{item.description}</p>
             </motion.div>
           ))}
         </div>
 
         {/* STATEMENT */}
         <FadeIn direction="up" delay={0.2}>
-          <div className="mt-20 rounded-3xl border p-10 md:p-14" style={{ borderColor: "var(--pink-line)", background: "var(--bg-card)" }}>
-            <p className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: "var(--pink)" }}>
+          <div className="mt-20 rounded-3xl border p-8 md:p-14" style={{ borderColor: "var(--pink-line)", background: "var(--bg-card)" }}>
+            <p className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: "var(--pink)", }}>
               {dict.problem.perspectiveLabel}
             </p>
-            <h3 className="mt-6 text-3xl font-bold leading-tight md:text-5xl">
-              {dict.problem.statement}
+            <h3 className="mt-6 text-2xl font-bold leading-tight md:text-5xl">
+              {dict.problem.statement.split("\n").map((line, index) => (
+              <span key={index}>
+              {line}
+              <br />
+              </span>
+              ))}
             </h3>
           </div>
         </FadeIn>
