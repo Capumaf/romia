@@ -10,6 +10,7 @@ type Dict = Awaited<ReturnType<typeof getDictionary>>;
 
 export default function Dashboard({
   dict,
+  locale,
 }: {
   locale: Locale;
   dict: Dict;
@@ -40,10 +41,10 @@ export default function Dashboard({
         </FadeIn>
 
         <div className="hidden md:block">
-          <DashboardDemoDesktop />
+          <DashboardDemoDesktop dict={dict} locale={locale} />
         </div>
         <div className="md:hidden">
-          <DashboardDemoMobile />
+          <DashboardDemoMobile dict={dict} locale={locale} />
         </div>
       </div>
     </section>

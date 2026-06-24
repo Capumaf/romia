@@ -3,7 +3,8 @@
 import { useDemo } from "./DemoProvider";
 
 export default function IntelligencePanel() {
-  const { leadProfile, currentScore } = useDemo();
+  const { leadProfile, currentScore, dict } = useDemo();
+  const t = dict.dashboardDemo;
 
   return (
     <div
@@ -29,28 +30,26 @@ export default function IntelligencePanel() {
           className="mt-1 text-sm"
           style={{ color: "var(--ink-mute)" }}
         >
-          Lead Match Score
+          {t.scoreLabel}
         </p>
       </div>
 
       <div className="mt-8 space-y-3 text-sm">
 
         {leadProfile.district && (
-          <div>✓ Ubicación detectada</div>
+          <div>{t.districtDetected}</div>
         )}
 
         {leadProfile.budget && (
-          <div>✓ Presupuesto detectado</div>
+          <div>{t.budgetDetected}</div>
         )}
 
         {leadProfile.bedrooms && (
-          <div>✓ Dormitorios detectados</div>
+          <div>{t.bedroomsDetected}</div>
         )}
 
         {leadProfile.leadStatus && (
-        <div>
-        {leadProfile.leadStatus}
-        </div>
+          <div>{leadProfile.leadStatus}</div>
         )}
 
       </div>

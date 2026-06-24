@@ -5,10 +5,22 @@ import ChatWindow from "./ChatWindow";
 import LeadStatus from "./LeadStatus";
 import IntelligencePanel from "./IntelligencePanel";
 import LeadProfile from "./LeadProfile";
+import type { getDictionary } from "@/lib/getDictionary";
+import type { Locale } from "@/i18n";
 
-export default function DashboardDemoMobile() {
+type Dict = Awaited<ReturnType<typeof getDictionary>>;
+
+export default function DashboardDemoMobile({
+  dict,
+  locale,
+}: {
+  dict: Dict;
+  locale: Locale;
+}) {
+  const t = dict.dashboardDemo;
+
   return (
-    <DemoProvider>
+    <DemoProvider dict={dict} locale={locale}>
       <div
         className="mt-10 rounded-3xl border"
         style={{
@@ -22,14 +34,14 @@ export default function DashboardDemoMobile() {
         >
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.25em]">
-              ROMIA Live Demo
+              {t.title}
             </p>
 
             <p
               className="mt-1 text-xs"
               style={{ color: "var(--ink-mute)" }}
             >
-              Cliente → ROMIA → Asesor
+              {t.subtitle}
             </p>
           </div>
 
@@ -45,15 +57,10 @@ export default function DashboardDemoMobile() {
         </div>
 
         <div className="space-y-4 p-4">
-
           <ChatWindow />
-
           <LeadStatus />
-
           <IntelligencePanel />
-
           <LeadProfile />
-
         </div>
       </div>
     </DemoProvider>

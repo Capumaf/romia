@@ -9,6 +9,97 @@ type Dict = Awaited<ReturnType<typeof getDictionary>>;
 
 const ease: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
+function FlowGrid({ label, items }: { label: string; items: { number: string; label: string }[] }) {
+  const row1 = items.slice(0, 3);
+  const row2 = items.slice(3, 6);
+
+  return (
+    <div className="rounded-3xl border p-8 md:p-10" style={{ borderColor: "var(--pink-line)", background: "var(--bg-card)" }}>
+      <p className="mb-10 font-mono text-xs uppercase tracking-[0.3em]" style={{ color: "var(--pink)" }}>
+        {label}
+      </p>
+
+      {/* ROW 1 — left to right */}
+      <div className="flex items-center">
+        {row1.map((item, i) => (
+          <div key={item.number} className="flex flex-1 items-center">
+            <motion.div
+              className="flex-1 rounded-2xl border p-5"
+              style={{ borderColor: "var(--pink-line)", background: "rgba(255,255,255,0.02)" }}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              whileHover={{ y: -2, transition: { duration: 0.2 } }}
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em]" style={{ color: "var(--pink)" }}>
+                {item.number}
+              </p>
+              <p className="mt-2 text-sm font-medium">{item.label}</p>
+            </motion.div>
+
+            {i < row1.length - 1 && (
+              <div className="flex shrink-0 items-center px-2">
+                <div className="h-px w-4" style={{ background: "var(--pink-line)" }} />
+                <svg width="6" height="6" viewBox="0 0 6 6">
+                  <path d="M0 3 L6 3 M3.5 0.5 L6 3 L3.5 5.5" stroke="var(--pink)" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* DOWN connector — from right end of row1 to right end of row2 */}
+      {row2.length > 0 && (
+        <div className="flex justify-end">
+          <div className="flex flex-col items-center" style={{ width: "calc(33.33%)" }}>
+            <div className="flex flex-col items-center py-1">
+              <div className="h-5 w-px" style={{ background: "var(--pink-line)" }} />
+              <svg width="6" height="6" viewBox="0 0 6 6">
+                <path d="M3 0 L3 6 M0.5 3.5 L3 6 L5.5 3.5" stroke="var(--pink)" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ROW 2 — right to left (serpentine) */}
+      {row2.length > 0 && (
+        <div className="flex flex-row-reverse items-center">
+          {row2.map((item, i) => (
+            <div key={item.number} className="flex flex-1 flex-row-reverse items-center">
+              <motion.div
+                className="flex-1 rounded-2xl border p-5"
+                style={{ borderColor: "var(--pink-line)", background: "rgba(255,255,255,0.02)" }}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                whileHover={{ y: -2, transition: { duration: 0.2 } }}
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em]" style={{ color: "var(--pink)" }}>
+                  {item.number}
+                </p>
+                <p className="mt-2 text-sm font-medium">{item.label}</p>
+              </motion.div>
+
+              {i < row2.length - 1 && (
+                <div className="flex shrink-0 flex-row-reverse items-center px-2">
+                  <div className="h-px w-4" style={{ background: "var(--pink-line)" }} />
+                  <svg width="6" height="6" viewBox="0 0 6 6">
+                    <path d="M6 3 L0 3 M2.5 0.5 L0 3 L2.5 5.5" stroke="var(--pink)" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function CoreEngine({ dict }: { locale: Locale; dict: Dict }) {
   return (
     <section id="engine" className="relative py-32">
@@ -79,17 +170,14 @@ export default function CoreEngine({ dict }: { locale: Locale; dict: Dict }) {
 
         {/* FLOW */}
         <FadeIn direction="up" delay={0.2}>
-          <div className="mt-24 rounded-3xl border p-8 md:p-12" style={{ borderColor: "var(--pink-line)", background: "var(--bg-card)" }}>
-            <p className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: "var(--pink)" }}>
-              {dict.coreEngine.flowLabel}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4 text-sm md:text-base" style={{ color: "var(--ink-dim)" }}>
-              {dict.coreEngine.flow.map((step, i) => (
-                <span key={i}>
-                  {step}{i < dict.coreEngine.flow.length - 1 ? " → " : ""}
-                </span>
-              ))}
-            </div>
+          <div className="mt-24">
+            <FlowGrid
+              label={dict.coreEngine.flowLabel}
+              items={dict.coreEngine.flow.map((step, i) => ({
+                number: String(i + 1).padStart(2, "0"),
+                label: step,
+              }))}
+            />
           </div>
         </FadeIn>
 

@@ -14,31 +14,14 @@ export const es = {
     description: "Transforma conversaciones en oportunidades calificadas de venta.",
     primaryCta: "Solicitar Demo",
     secondaryCta: "Explorar Framework",
-  heroFlow: [
-  {
-    title: "NUEVO LEAD",
-    subtitle: "WhatsApp · Web · CRM",
+    heroFlow: [
+      { title: "NUEVO LEAD", subtitle: "WhatsApp · Web · CRM" },
+      { title: "MOTOR ROMIA", subtitle: "Procesamiento y Ruta" },
+      { title: "INTENCIÓN", subtitle: "Presupuesto · Tiempo · Necesidad" },
+      { title: "LEAD SCORE", subtitle: "92% Compatibilidad" },
+      { title: "ASESOR", subtitle: "Listo para seguimiento" },
+    ],
   },
-  {
-    title: "MOTOR ROMIA",
-    subtitle: "Procesamiento y Ruta",
-  },
-  {
-    title: "INTENCIÓN",
-    subtitle: "Presupuesto · Tiempo · Necesidad",
-  },
-  {
-    title: "LEAD SCORE",
-    subtitle: "92% Compatibilidad",
-  },
-  {
-    title: "ASESOR",
-    subtitle: "Listo para seguimiento",
-  },
-],
-  },
-
-
 
   problem: {
     eyebrow: "El Problema Comercial",
@@ -101,7 +84,7 @@ export const es = {
       { number: "05", title: "Comparación de Proyectos", description: "Apoya recomendaciones inteligentes evaluando múltiples oportunidades frente a los requisitos del cliente." },
       { number: "06", title: "Enrutamiento de Leads", description: "Asigna oportunidades según criterios de calificación, prioridades comerciales y reglas operativas." },
     ],
-    flow: ["Captación", "Memoria", "Análisis", "Comparación", "Decisión", ,"Enrutamiento"],
+    flow: ["Captación", "Memoria", "Análisis", "Comparación", "Decisión", "Enrutamiento"],
   },
   howItWorks: {
     eyebrow: "Cómo Funciona",
@@ -126,8 +109,8 @@ export const es = {
     queueLabel: "Cola de Calificación de Leads",
     budgetLabel: "Presupuesto",
     modulesLabel: "Módulos de Inteligencia",
-    kpis: [ ["Leads A+", "18"],["Leads Calificados", "248"], ["Conversión", "18.4%"], ["Tiempo Respuesta", "1.2m"]],
-    leads: [ ["María González", "A+", "S/100k"], ["Carlos Ramírez", "A", "S/80k"],  ["Ana Torres", "B", "S/50k"],],
+    kpis: [["Leads A+", "18"], ["Leads Calificados", "248"], ["Conversión", "18.4%"], ["Tiempo Respuesta", "1.2m"]],
+    leads: [["María González", "A+", "S/100k"], ["Carlos Ramírez", "A", "S/80k"], ["Ana Torres", "B", "S/50k"]],
     modules: ["Captación de Leads", "Memoria del Cliente", "Inteligencia de Proyectos", "Inteligencia de Stock", "Comparación de Proyectos", "Enrutamiento de Leads"],
   },
   industries: {
@@ -173,5 +156,21 @@ export const es = {
     location: "Berlín · Lima",
     copyright: "ROMIA © 2026 by Ninan Studio",
     tags: ["Inteligencia Comercial", "Implementación Primero", "Sistemas IA"],
+  },
+  dashboardDemo: {
+    title: "ROMIA Live Demo",
+    subtitle: "Cliente → ROMIA → Asesor",
+    channelLabel: "Cliente",
+    channel: "WhatsApp",
+    scoreLabel: "Lead Match Score",
+    districtDetected: "✓ Ubicación detectada",
+    budgetDetected: "✓ Presupuesto detectado",
+    bedroomsDetected: "✓ Dormitorios detectados",
+    profileTitle: "Lead Profile",
+    profileClient: "Cliente",
+    profileZone: "Zona",
+    profileBudget: "Presupuesto",
+    profileBedrooms: "Dormitorios",
+    profileStatus: "Estado",
   },
 };

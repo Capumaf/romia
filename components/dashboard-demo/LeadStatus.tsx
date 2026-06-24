@@ -3,19 +3,23 @@
 import { useDemo } from "./DemoProvider";
 
 export default function LeadStatus() {
-  const { leadProfile } = useDemo();
+  const { leadProfile, dict } = useDemo();
+  const t = dict.dashboardDemo;
 
-  const status =
-    leadProfile.leadStatus || "Calificando lead";
+  const status = leadProfile.leadStatus || t.leadStatusQualifying;
 
   const getColor = () => {
-    if (status.includes("caliente"))
+    if (status.toLowerCase().includes("hot") || status.toLowerCase().includes("caliente"))
       return "#f97316";
-
-    if (status.includes("Alta"))
+    if (status.toLowerCase().includes("high") || status.toLowerCase().includes("alta"))
       return "#22c55e";
-
     return "#eab308";
+  };
+
+  const getLabel = () => {
+    if (status === t.leadStatusQualifying) return `🟡 ${t.leadStatusQualifying}`;
+    if (status === t.leadStatusHighIntent) return `🟢 ${t.leadStatusHighIntent}`;
+    return `🔥 ${status}`;
   };
 
   return (
@@ -30,18 +34,14 @@ export default function LeadStatus() {
         className="font-mono text-xs uppercase tracking-[0.2em]"
         style={{ color: "var(--ink-mute)" }}
       >
-        Estado del Lead
+        {t.leadStatusLabel}
       </p>
 
       <div
         className="mt-4 text-lg font-semibold"
         style={{ color: getColor() }}
       >
-        {status === "Calificando lead"
-          ? "🟡 Calificando lead"
-          : status === "Alta intención"
-          ? "🟢 Alta intención"
-          : `🔥 ${status}`}
+        {getLabel()}
       </div>
     </div>
   );

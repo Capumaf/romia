@@ -6,19 +6,20 @@ import TypingIndicator from "./TypingIndicator";
 import { useEffect, useRef } from "react";
 
 export default function ChatWindow() {
-  const { visibleMessages } = useDemo();
+  const { visibleMessages, dict } = useDemo();
+  const t = dict.dashboardDemo;
 
   const displayedMessages = visibleMessages.slice(-10);
-  
+
   const chatRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-  if (chatRef.current) {
-    chatRef.current.scrollTo({
-      top: chatRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  }
-}, [visibleMessages]);
+    if (chatRef.current) {
+      chatRef.current.scrollTo({
+        top: chatRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [visibleMessages]);
 
   return (
     <div
@@ -30,22 +31,21 @@ export default function ChatWindow() {
     >
       <div className="mb-5">
         <p className="font-mono text-xs uppercase tracking-[0.2em]">
-          Cliente
+          {t.channelLabel}
         </p>
 
         <p
           className="mt-1 text-sm"
           style={{ color: "var(--ink-mute)" }}
         >
-          WhatsApp
+          {t.channel}
         </p>
       </div>
 
-        <div
+      <div
         ref={chatRef}
         className="h-[280px] overflow-y-auto scrollbar-hide flex flex-col gap-3 lg:h-[400px]"
-        >
-
+      >
         <AnimatePresence>
           {displayedMessages.map((message, index) => (
             <motion.div
@@ -53,9 +53,7 @@ export default function ChatWindow() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm ${
-                message.sender === "client"
-                  ? "ml-auto"
-                  : ""
+                message.sender === "client" ? "ml-auto" : ""
               }`}
               style={{
                 background:
@@ -65,19 +63,19 @@ export default function ChatWindow() {
               }}
             >
               <>
-              <div>{message.text}</div>
-               {message.time && (
-              <div
-              className="mt-2 text-[10px] text-right"
-              style={{
-              color: "var(--ink-mute)",
-               opacity: 0.7,
-              }}
-              >
-              {message.time}
-              </div>
-              )}
-               </>
+                <div>{message.text}</div>
+                {message.time && (
+                  <div
+                    className="mt-2 text-[10px] text-right"
+                    style={{
+                      color: "var(--ink-mute)",
+                      opacity: 0.7,
+                    }}
+                  >
+                    {message.time}
+                  </div>
+                )}
+              </>
             </motion.div>
           ))}
         </AnimatePresence>
