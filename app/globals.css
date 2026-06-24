@@ -3,6 +3,7 @@
 @source "../components";
 @source "../sections";
 @source "../app";
+@source "../app/os";
 
 :root {
   --bg: #050507;
@@ -74,3 +75,4 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
