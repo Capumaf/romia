@@ -57,9 +57,14 @@ body {
 }
 
 * {
-  cursor: none;
+  cursor: auto;
 }
 
+
+.os-root,
+.os-root * {
+  cursor: auto;
+}
 /* Hide scrollbar */
 
 .scrollbar-hide {
