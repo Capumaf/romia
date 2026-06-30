@@ -16,3 +16,159 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Implementation {
+  id             String    @id @default(cuid())
+  client         Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId       String
+  name           String   // ej. "Torre Black", "Bernales 442"
+  projectType    String?  // ej. "Inmobiliario", "Retail", "Servicios"
+  status         String    @default("setup") // setup, live, paused, completed
+  currentPhase   String?  // ej. "Discovery", "Configuración", "Testing", "Producción"
+  budget         Decimal?  @db.Decimal(10, 2)
+  whatsappNumber String?
+  crm            String?  // ej. "Evolta"
+  startDate      DateTime?
+  goLiveDate     DateTime?
+  notes          String?
+  flows          Flow[]
+  agents         Agent[]
+  costs          Cost[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Client {
+  id              String   @id @default(cuid())
+  name            String
+  company         String?
+  email           String?
+  phone           String?
+  status          String   @default("active")
+  country         String?
+  notes           String?
+  costs          Cost[]
+  implementations Implementation[]
+  pricings       Pricing[]
+  demos          Demo[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Flow {
+  id               String    @id @default(cuid())
+  implementation   Implementation @relation(fields: [implementationId], references: [id], onDelete: Cascade)
+  implementationId String
+  name             String   // ej. "Lead Intake WhatsApp", "Follow-up automático"
+  type             String?  // ej. "intake", "follow-up", "qualification", "handoff"
+  status           String    @default("active") // active, paused, draft, error
+  n8nWorkflowId    String?  // referencia al workflow en n8n
+  trigger          String?  // ej. "WhatsApp message", "Webhook", "Schedule"
+  description      String?
+  lastRunAt        DateTime?
+  errorCount       Int       @default(0)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model Agent {
+  id               String    @id @default(cuid())
+  implementation   Implementation @relation(fields: [implementationId], references: [id])
+  implementationId String
+  name             String   // ej. "Asistente de calificación de leads"
+  role             String?  // ej. "Qualifier", "Closer", "Support"
+  model            String?  // ej. "gpt-4o-mini", "claude-sonnet-4-6"
+  systemPrompt     String?  @db.Text
+  status           String    @default("active") // active, paused, testing
+  temperature      Decimal?  @db.Decimal(3, 2)
+  maxTokens        Int?
+  description      String?
+
+  // Tracking de uso y costo
+  totalTokensIn    Int       @default(0)
+  totalTokensOut   Int       @default(0)
+  totalRequests    Int       @default(0)
+  totalCost        Decimal?  @db.Decimal(10, 4) @default(0)
+  lastUsedAt       DateTime?
+
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+
+enum CostCategory {
+  CLAUDE_API
+  OPENAI_API
+  N8N
+  WHATSAPP_API
+  HOSTING
+  CRM
+  OTHER
+}
+
+model Cost {
+  id               String    @id @default(cuid())
+  client           Client          @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId         String
+  implementation   Implementation? @relation(fields: [implementationId], references: [id], onDelete: Cascade)
+  implementationId String?
+
+  category         CostCategory
+  description      String?
+  amount           Decimal   @db.Decimal(10, 2)
+  currency         String    @default("USD")
+  billingPeriod    String?  // ej. "monthly", "one-time", "usage-based"
+  periodMonth      Int?     // 1-12
+  periodYear       Int?
+
+  recurring        Boolean   @default(true)
+
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+enum PricingTier {
+  STARTER
+  GROWTH
+  ENTERPRISE
+  CUSTOM
+}
+
+model Pricing {
+  id            String      @id @default(cuid())
+  client         Client      @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId      String
+
+  tier          PricingTier
+  monthlyFee    Decimal?    @db.Decimal(10, 2)
+  setupFee      Decimal?    @db.Decimal(10, 2)
+  currency      String      @default("USD")
+
+  includedFlows Int?        // cuántos flows incluye el plan
+  includedAgents Int?       // cuántos agentes incluye
+  overageRate   Decimal?    @db.Decimal(10, 4) // costo extra por uso adicional
+
+  contractStart DateTime?
+  contractEnd   DateTime?
+  status        String      @default("active") // active, expired, negotiating
+
+  notes         String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Demo {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  industry    String?
+  status      String   @default("active") // active, draft
+  fileUrl     String   // ej. "/demos/galeon.html"
+  client      Client?  @relation(fields: [clientId], references: [id])
+  clientId    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+

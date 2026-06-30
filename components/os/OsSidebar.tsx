@@ -10,9 +10,8 @@ const navItems = [
   { label: "Demo Studio", href: "/os/demo", icon: "▷" },
   { label: "Flows", href: "/os/flows", icon: "⟳" },
   { label: "Agents", href: "/os/agents", icon: "◆" },
-  { label: "Prompts", href: "/os/prompts", icon: "❯" },
-  { label: "Templates", href: "/os/templates", icon: "▣" },
-  { label: "Knowledge", href: "/os/knowledge", icon: "◉" },
+  { label: "Costs", href: "/os/costs", icon: "◐" },
+  { label: "Pricing", href: "/os/pricing", icon: "◇" },
   { label: "Analytics", href: "/os/analytics", icon: "▲" },
 ];
 

@@ -1,37 +1,73 @@
-"use client";
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import DemoCard from "./DemoCard";
 
-import Link from "next/link";
-import { useState } from "react";
+async function createDemo(formData: FormData) {
+  "use server";
 
-const initialDemos = [
-  {
-    id: "galeon",
-    title: "Galeón Inmobiliaria",
-    client: "Galeón",
-    industry: "Real Estate",
-    status: "active",
-    file: "/demos/galeon.html",
-  },
-  {
-    id: "galeon-v2",
-    title: "Galeón Inmobiliaria v2",
-    client: "Galeón",
-    industry: "Real Estate",
-    status: "active",
-    file: "/demos/galeon-v2.html",
-  },
-];
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const industry = formData.get("industry") as string;
+  const fileUrl = formData.get("fileUrl") as string;
+  const clientId = formData.get("clientId") as string;
 
-export default function DemoPage() {
-  const [demos, setDemos] = useState(initialDemos);
+  if (!title || !fileUrl) return;
 
-  const toggleStatus = (id: string) => {
-    setDemos((prev) =>
-      prev.map((d) =>
-        d.id === id ? { ...d, status: d.status === "active" ? "inactive" : "active" } : d
-      )
-    );
-  };
+  await prisma.demo.create({
+    data: {
+      title,
+      description: description || null,
+      industry: industry || null,
+      fileUrl,
+      clientId: clientId || null,
+    },
+  });
+
+  revalidatePath("/os/demo");
+}
+
+async function updateDemo(formData: FormData) {
+  "use server";
+
+  const id = formData.get("id") as string;
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const industry = formData.get("industry") as string;
+  const fileUrl = formData.get("fileUrl") as string;
+  const status = formData.get("status") as string;
+
+  if (!id || !title || !fileUrl) return;
+
+  await prisma.demo.update({
+    where: { id },
+    data: {
+      title,
+      description: description || null,
+      industry: industry || null,
+      fileUrl,
+      status,
+    },
+  });
+
+  revalidatePath("/os/demo");
+}
+
+async function deleteDemo(formData: FormData) {
+  "use server";
+
+  const id = formData.get("id") as string;
+  if (!id) return;
+
+  await prisma.demo.delete({ where: { id } });
+
+  revalidatePath("/os/demo");
+}
+
+export default async function DemoPage() {
+  const [demos, clients] = await Promise.all([
+    prisma.demo.findMany({ orderBy: { createdAt: "desc" }, include: { client: true } }),
+    prisma.client.findMany({ orderBy: { name: "asc" } }),
+  ]);
 
   return (
     <div>
@@ -42,61 +78,75 @@ export default function DemoPage() {
         <h1 className="mt-2 text-2xl font-bold" style={{ fontFamily: "var(--font-orbitron)" }}>
           Demos
         </h1>
+        <p className="mt-1 text-sm" style={{ color: "var(--ink-mute)" }}>
+          Demos de conversación ROMIA listos para presentar.
+        </p>
       </div>
 
-      <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "var(--pink-line)" }}>
-        <table className="w-full text-sm">
-          <thead>
-            <tr style={{ background: "var(--bg-card)", borderBottom: "1px solid var(--pink-line)" }}>
-              <th className="px-6 py-3 text-left font-mono text-xs uppercase tracking-[0.2em]" style={{ color: "var(--ink-mute)" }}>Demo</th>
-              <th className="px-6 py-3 text-left font-mono text-xs uppercase tracking-[0.2em]" style={{ color: "var(--ink-mute)" }}>Cliente</th>
-              <th className="px-6 py-3 text-left font-mono text-xs uppercase tracking-[0.2em]" style={{ color: "var(--ink-mute)" }}>Industria</th>
-              <th className="px-6 py-3 text-left font-mono text-xs uppercase tracking-[0.2em]" style={{ color: "var(--ink-mute)" }}>Estado</th>
-              <th className="px-6 py-3 text-right font-mono text-xs uppercase tracking-[0.2em]" style={{ color: "var(--ink-mute)" }}>Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {demos.map((demo, i) => (
-              <tr
-                key={demo.id}
-                style={{
-                  background: i % 2 === 0 ? "var(--bg)" : "var(--bg-card)",
-                  borderBottom: "1px solid rgba(255,45,142,0.1)",
-                }}
-              >
-                <td className="px-6 py-4 font-medium">{demo.title}</td>
-                <td className="px-6 py-4" style={{ color: "var(--ink-dim)" }}>{demo.client}</td>
-                <td className="px-6 py-4" style={{ color: "var(--ink-dim)" }}>{demo.industry}</td>
-                <td className="px-6 py-4">
-                  <button
-                    onClick={() => toggleStatus(demo.id)}
-                    className="rounded-full px-3 py-1 text-xs font-medium transition-all"
-                    style={{
-                      background: demo.status === "active" ? "rgba(52,211,153,.12)" : "rgba(251,113,133,.12)",
-                      color: demo.status === "active" ? "var(--green)" : "var(--red)",
-                    }}
-                  >
-                    {demo.status === "active" ? "Activo" : "Inactivo"}
-                  </button>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  {demo.status === "active" ? (
-                    <Link
-                      href={demo.file}
-                      target="_blank"
-                      className="text-xs font-medium"
-                      style={{ color: "var(--pink)" }}
-                    >
-                      Abrir demo →
-                    </Link>
-                  ) : (
-                    <span className="text-xs" style={{ color: "var(--ink-mute)" }}>—</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Form crear demo */}
+      <form
+        action={createDemo}
+        className="mb-8 grid grid-cols-2 gap-3 rounded-2xl border p-4"
+        style={{ borderColor: "var(--pink-line)", background: "var(--bg-card)" }}
+      >
+        <input
+          name="title"
+          placeholder="Título *"
+          required
+          className="rounded-lg border bg-transparent px-3 py-2 text-sm"
+          style={{ borderColor: "var(--pink-line)", color: "white" }}
+        />
+        <input
+          name="fileUrl"
+          placeholder="Ruta archivo (ej. /demos/galeon.html) *"
+          required
+          className="rounded-lg border bg-transparent px-3 py-2 text-sm"
+          style={{ borderColor: "var(--pink-line)", color: "white" }}
+        />
+        <input
+          name="industry"
+          placeholder="Industria"
+          className="rounded-lg border bg-transparent px-3 py-2 text-sm"
+          style={{ borderColor: "var(--pink-line)", color: "white" }}
+        />
+        <select
+          name="clientId"
+          className="rounded-lg border bg-transparent px-3 py-2 text-sm"
+          style={{ borderColor: "var(--pink-line)", color: "white" }}
+        >
+          <option value="" style={{ color: "black" }}>Cliente (opcional)</option>
+          {clients.map((c) => (
+            <option key={c.id} value={c.id} style={{ color: "black" }}>{c.name}</option>
+          ))}
+        </select>
+        <input
+          name="description"
+          placeholder="Descripción"
+          className="col-span-2 rounded-lg border bg-transparent px-3 py-2 text-sm"
+          style={{ borderColor: "var(--pink-line)", color: "white" }}
+        />
+        <button
+          type="submit"
+          className="col-span-2 rounded-lg px-4 py-2 text-sm font-medium"
+          style={{ background: "var(--pink)", color: "black" }}
+        >
+          + Agregar demo
+        </button>
+      </form>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {demos.length === 0 ? (
+          <p style={{ color: "var(--ink-mute)" }}>Aún no hay demos registrados.</p>
+        ) : (
+          demos.map((demo) => (
+            <DemoCard
+              key={demo.id}
+              demo={demo}
+              updateDemo={updateDemo}
+              deleteDemo={deleteDemo}
+            />
+          ))
+        )}
       </div>
     </div>
   );
