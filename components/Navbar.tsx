@@ -87,7 +87,7 @@ export default function Navbar({ locale, dict }: NavbarProps) {
             </div>
 
             {/* CENTER — desktop only */}
-            <div className="hidden items-center gap-8 md:flex">
+            <div className="hidden items-center gap-8 lg:flex">
               {links.map((item) => (
                 <Link
                   key={item.href}
@@ -109,8 +109,17 @@ export default function Navbar({ locale, dict }: NavbarProps) {
                 {dict.nav.locale}
               </Link>
               <Link
+                href="/os"
+                prefetch={false}
+                aria-label="ROMIA OS"
+                className="hidden rounded-xl border px-3 py-2 text-sm font-medium opacity-70 transition-opacity hover:opacity-100 lg:block"
+                style={{ borderColor: "var(--pink-line)" }}
+              >
+                OS
+              </Link>
+              <Link
                 href={`/${locale}#contact`}
-                className="hidden rounded-xl px-4 py-2 text-sm font-medium md:block"
+                className="hidden rounded-xl px-4 py-2 text-sm font-medium lg:block"
                 style={{ background: "var(--pink)", color: "#fff" }}
               >
                 {dict.nav.cta}
@@ -120,7 +129,7 @@ export default function Navbar({ locale, dict }: NavbarProps) {
               <button
                 onClick={() => setOpen(!open)}
                 aria-label={open ? "Close Menu" : "Open Menu"}
-                className="relative flex h-9 w-9 items-center justify-center rounded-xl border md:hidden"
+                className="relative flex h-9 w-9 items-center justify-center rounded-xl border lg:hidden"
                 style={{
                   borderColor: "var(--pink-line)",
                   background: open ? "rgba(255,45,142,.05)" : "transparent",
@@ -154,7 +163,7 @@ export default function Navbar({ locale, dict }: NavbarProps) {
           {/* MOBILE MENU */}
           {open && (
             <div
-              className="border-t px-5 pb-5 md:hidden"
+              className="border-t px-5 pb-5 lg:hidden"
               style={{ borderColor: "var(--pink-line)" }}
             >
               <div className="flex flex-col gap-1 pt-4">
@@ -168,6 +177,14 @@ export default function Navbar({ locale, dict }: NavbarProps) {
                     {item.label}
                   </Link>
                 ))}
+                <Link
+                  href="/os"
+                  prefetch={false}
+                  onClick={() => setOpen(false)}
+                  className="rounded-xl px-4 py-3 text-sm opacity-70 transition-opacity hover:opacity-100"
+                >
+                  ROMIA OS
+                </Link>
                 <Link
                   href={`/${locale}#contact`}
                   onClick={() => setOpen(false)}

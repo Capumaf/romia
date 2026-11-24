@@ -5,9 +5,15 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) throw new Error(`Falta la variable de entorno ${name}`);
+  return value;
+}
+
 async function main() {
-  const password = await bcrypt.hash("romia2026", 10);
-  const passwordAntonella = await bcrypt.hash("romia2026.", 10);
+  const password = await bcrypt.hash(requireEnv("SEED_CESAR_PASSWORD"), 10);
+  const passwordAntonella = await bcrypt.hash(requireEnv("SEED_ANTONELLA_PASSWORD"), 10);
 
   const cesar = await prisma.user.upsert({
     where: { email: "cesar@romia.io" },
